@@ -4,13 +4,13 @@ from discord.ext import commands
 import json
 import aiohttp
 
-# Replace with your bot token
-BOT_TOKEN = 
+# Variables
+BOT_TOKEN = <bot token here>
+WHITELIST_FILE = <path to whitelist file here>
+GUILD_ID = <discord guild id here>
+ROLE_ID = <discord role id here>
 
-# Path to your Minecraft whitelist file
-WHITELIST_FILE = "/home/carbon/Minecraft/V0YD/Main/whitelist.json"
-
-bot = discord.Bot(debug_guilds=[1347306111212064910])
+bot = discord.Bot(debug_guilds=[GUILD_ID])
 
 async def get_uuid(gameType: str, username: str):
     """
@@ -77,7 +77,7 @@ async def add_to_whitelist(uuid, username):
     return True
 
 @bot.slash_command(name="whitelist", description="Whitelist a Minecraft user")
-@commands.has_role(1347306135048159375)
+@commands.has_role(ROLE_ID)
 @option("gametype", description="Java or Bedrock Edition", choices=["Java", "Bedrock"])
 @option("username", description="Minecraft Username/Xbox Gamertag", required=True)
 async def whitelist(ctx: discord.ApplicationCommand, gametype: str, username: str):
@@ -111,5 +111,6 @@ async def whitelist(ctx: discord.ApplicationCommand, gametype: str, username: st
 @bot.event
 async def on_ready():
     print(f'Logged in as {bot.user.name}')
+
 
 bot.run(BOT_TOKEN)
